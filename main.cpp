@@ -43,7 +43,15 @@ void drawBuilding(float x1,float x2,float x3,float x4,float y1,float y2,float y3
 GLuint VAO, VBO, shader, v_uniform,f_uniform,h_uniform;
 float v_random;
 float h_random;
-
+float temp;
+bool* keyStates=new bool[256];
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
+    if(key==GLFW_KEY_0 && action==GLFW_PRESS){
+        temp=h_random;
+        h_random=v_random;
+        v_random=temp;
+    }
+}
 
 static const char* vshader = " \n\
 #version 330 \n\
@@ -148,7 +156,7 @@ int main()
         return 1;
     }
     //while loop
-    
+    key_callback(mainwindow, 48, glfwGetKeyScancode(GLFW_KEY_0), GLFW_PRESS, GLFW_MOD_SHIFT);
     createShape();
     srand(time(NULL));
     while (!glfwWindowShouldClose(mainwindow))
